@@ -1,0 +1,281 @@
+openapi: 3.1.0
+info:
+  title: needz-platform
+  version: '1.0'
+  summary: Plateforme de recherche d'appels d'offres
+  description: |-
+    Api de la plateforme de recherche d'appels d'offres.
+  contact:
+    name: Valentin THOMAS
+    email: vthomas@humancraft.eu
+servers:
+  - url: 'http://localhost'
+paths:
+  /api/needs:
+    get:
+      operationId: get-api-needs
+      summary: Liste des appels d'offres
+      description: Liste des appels d'offres avec recherche optionelle
+      tags:
+        - Need
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: search
+          description: paramètre de recherche textuelle dans le titre de l'appel d'offres
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        author:
+                          type: object
+                          required:
+                            - id
+                            - name
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                        skills:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              label:
+                                type: string
+                            required:
+                              - id
+                              - label
+                      required:
+                        - id
+                        - title
+                        - author
+                        - skills
+                required:
+                  - data
+    post:
+      operationId: post-api-needs
+      summary: Création d'un appel d'offres
+      description: Création d'un appel d'offres par l'utilisateur authentifié
+      tags:
+        - Need
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                summary:
+                  type: string
+                url:
+                  type: string
+                skills:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: integer
+              required:
+                - title
+                - summary
+                - url
+                - skills
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - id
+                      - title
+                      - author
+                      - skills
+                    properties:
+                      id:
+                        type: integer
+                      title:
+                        type: string
+                      author:
+                        type: object
+                        required:
+                          - id
+                          - name
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                      skills:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            label:
+                              type: string
+                          required:
+                            - id
+                            - label
+                required:
+                  - data
+  '/api/needs/{need}':
+    parameters:
+      - schema:
+          type: integer
+        name: need
+        in: path
+        required: true
+        description: identifiant de l'appel d'offres
+    get:
+      operationId: get-api-needs-need
+      summary: Détails de l'appel d'offres
+      description: Récupération des détails de l'appel d'offres
+      tags:
+        - Need
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - id
+                      - title
+                      - summary
+                      - url
+                      - author
+                      - skills
+                    properties:
+                      id:
+                        type: integer
+                      title:
+                        type: string
+                      summary:
+                        type: string
+                      url:
+                        type: string
+                      author:
+                        type: object
+                        required:
+                          - id
+                          - name
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                      skills:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            label:
+                              type: string
+                          required:
+                            - id
+                            - label
+                required:
+                  - data
+    patch:
+      operationId: put-api-needs-need
+      summary: Mise à jour de l'appel d'offres
+      description: Mise à jour de l'appel d'offre. Seul le créateur de l'appel d'offres peut le mettre à jour
+      tags:
+        - Need
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                summary:
+                  type: string
+                url:
+                  type: string
+                skills:
+                  type: array
+                  items:
+                    type: integer
+              required:
+                - title
+                - summary
+                - url
+                - skills
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - id
+                      - title
+                      - author
+                      - skills
+                    properties:
+                      id:
+                        type: integer
+                      title:
+                        type: string
+                      author:
+                        type: object
+                        required:
+                          - id
+                          - name
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                      skills:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            label:
+                              type: string
+                          required:
+                            - id
+                            - label
+                required:
+                  - data
+tags:
+  - name: Need
