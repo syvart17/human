@@ -2,31 +2,15 @@ Ce projet est une API REST développée avec Symfony pour gérer des appels d’
 Les routes sont décrites dans le fichier `needs.openapi.yaml`.
 
 ---
+Installation
 
-## ⚙️ Prérequis
-
-- PHP >= 8.1
-- Composer
-- Symfony CLI (recommandé)
-- MySQL ou MariaDB
-- Git
-
----
-
-## 🚀 Installation
-
-1. **Cloner le projet** :
-   ```bash
-   git clone git@github.com:ton-pseudo/nom-du-repo.git
-   cd nom-du-repo
-
+1. Cloner le projet:
+   git clone git@github.com:syvart17/human.git
 
 Installer les dépendances :
 composer install
+
 Configurer la base de données :
-
-Copier le fichier .env en .env.local
-
 Créer la base + faire les migrations :
 
 php bin/console doctrine:database:create
