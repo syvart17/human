@@ -1,5 +1,19 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+api_needs_index:
+    path: /api/needs
+    controller: App\Controller\Api\NeedController::index
+    methods: GET
+
+api_needs_show:
+    path: /api/needs/{id}
+    controller: App\Controller\Api\NeedController::show
+    methods: GET
+
+api_needs_create:
+    path: /api/needs
+    controller: App\Controller\Api\NeedController::create
+    methods: POST
+
+api_needs_update:
+    path: /api/needs/{id}
+    controller: App\Controller\Api\NeedController::update
+    methods: PATCH
